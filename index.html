@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avalie a Gráfica JM Multi-Serviços</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Barra de cores de prova (referência ao "color bar" de gráficas offset) -->
+  <div class="color-bar" aria-hidden="true">
+    <span class="c"></span><span class="m"></span><span class="y"></span><span class="k"></span>
+  </div>
+
+  <main class="page">
+
+    <header class="header">
+      <div class="crop-mark tl" aria-hidden="true"></div>
+      <div class="crop-mark tr" aria-hidden="true"></div>
+      <img src="img/logo.png" alt="Gráfica JM Multi-Serviços" class="logo">
+      <p class="eyebrow">Pesquisa de satisfação · Serviço concluído</p>
+      <h1>Como foi sua experiência com a gente?</h1>
+      <p class="subtitle">Sua opinião nos ajuda a imprimir sempre um trabalho melhor. Leva menos de 1 minuto.</p>
+    </header>
+
+    <!-- TELA 1: FORMULÁRIO -->
+    <section class="card" id="tela-formulario">
+      <form id="form-avaliacao" novalidate>
+
+        <fieldset class="campo">
+          <legend>Qual serviço realizamos para você? <span class="opcional">(opcional)</span></legend>
+          <select id="servico" name="servico">
+            <option value="">Selecione um serviço</option>
+            <option value="Cartão de visita">Cartão de visita</option>
+            <option value="Banner / Faixa">Banner / Faixa</option>
+            <option value="Adesivo / Vinil">Adesivo / Vinil</option>
+            <option value="Impressão digital">Impressão digital</option>
+            <option value="Encadernação">Encadernação</option>
+            <option value="Convites">Convites</option>
+            <option value="Carimbo">Carimbo</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </fieldset>
+
+        <fieldset class="campo">
+          <legend>Sua nota para o serviço <span class="obrigatorio">*</span></legend>
+          <div class="estrelas" id="estrelas" role="radiogroup" aria-label="Avaliação de 1 a 5 estrelas">
+            <button type="button" class="estrela" data-valor="1" role="radio" aria-checked="false" aria-label="1 estrela - Muito ruim">★</button>
+            <button type="button" class="estrela" data-valor="2" role="radio" aria-checked="false" aria-label="2 estrelas - Ruim">★</button>
+            <button type="button" class="estrela" data-valor="3" role="radio" aria-checked="false" aria-label="3 estrelas - Regular">★</button>
+            <button type="button" class="estrela" data-valor="4" role="radio" aria-checked="false" aria-label="4 estrelas - Bom">★</button>
+            <button type="button" class="estrela" data-valor="5" role="radio" aria-checked="false" aria-label="5 estrelas - Excelente">★</button>
+          </div>
+          <p class="legenda-estrela" id="legenda-estrela">Toque em uma estrela para avaliar</p>
+          <input type="hidden" id="nota" name="nota" value="0">
+        </fieldset>
+
+        <!-- Bloco exibido SOMENTE quando a nota é de 4 estrelas para baixo -->
+        <div class="bloco-condicional" id="bloco-melhoria" hidden>
+          <fieldset class="campo destaque-atencao">
+            <legend>O que podemos melhorar? <span class="obrigatorio">*</span></legend>
+            <p class="ajuda">Sentimos muito que a experiência não foi perfeita. Conte pra gente o que aconteceu para corrigirmos.</p>
+
+            <div class="chips" id="chips-motivos">
+              <button type="button" class="chip" data-motivo="Atendimento">Atendimento</button>
+              <button type="button" class="chip" data-motivo="Prazo de entrega">Prazo de entrega</button>
+              <button type="button" class="chip" data-motivo="Qualidade do material">Qualidade do material</button>
+              <button type="button" class="chip" data-motivo="Preço">Preço</button>
+              <button type="button" class="chip" data-motivo="Comunicação">Comunicação</button>
+              <button type="button" class="chip" data-motivo="Erro no pedido">Erro no pedido</button>
+              <button type="button" class="chip" data-motivo="Outro">Outro</button>
+            </div>
+
+            <label for="comentario-negativo" class="label-textarea">Descreva com mais detalhes</label>
+            <textarea id="comentario-negativo" name="comentario-negativo" rows="4" placeholder="Ex: o banner chegou um dia depois do combinado..."></textarea>
+
+            <label for="telefone-contato" class="label-textarea">Telefone/WhatsApp para retorno <span class="opcional">(opcional)</span></label>
+            <input type="tel" id="telefone-contato" name="telefone-contato" placeholder="(92) 90000-0000" inputmode="tel">
+          </fieldset>
+        </div>
+
+        <!-- Bloco exibido SOMENTE quando a nota é 5 estrelas -->
+        <div class="bloco-condicional" id="bloco-elogio" hidden>
+          <fieldset class="campo destaque-sucesso">
+            <legend>Que ótimo! O que mais gostou? <span class="opcional">(opcional)</span></legend>
+            <textarea id="comentario-positivo" name="comentario-positivo" rows="3" placeholder="Ex: atendimento rápido, acabamento impecável..."></textarea>
+          </fieldset>
+        </div>
+
+        <fieldset class="campo">
+          <legend>Seu nome <span class="opcional">(opcional)</span></legend>
+          <input type="text" id="nome" name="nome" placeholder="Como podemos te chamar?">
+        </fieldset>
+
+        <p class="erro-form" id="erro-form" role="alert" hidden></p>
+
+        <button type="submit" class="botao-enviar" id="botao-enviar">Enviar avaliação</button>
+      </form>
+    </section>
+
+    <!-- TELA 2: AGRADECIMENTO NOTA ALTA -->
+    <section class="card tela-resultado" id="tela-sucesso" hidden>
+      <div class="icone-resultado sucesso" aria-hidden="true">✓</div>
+      <h2>Muito obrigado pela nota!</h2>
+      <p>Ficamos muito felizes em saber que você gostou do nosso trabalho. Isso nos motiva a continuar imprimindo qualidade todos os dias.</p>
+      <button type="button" class="botao-secundario" id="botao-nova-avaliacao-1">Voltar ao início</button>
+      <button type="button" class="botao-secundario botao-sair" id="botao-sair-1">Sair</button>
+    </section>
+
+    <!-- TELA 4: SAÍDA DO SISTEMA -->
+    <section class="card tela-resultado" id="tela-saida" hidden>
+      <div class="icone-resultado sucesso" aria-hidden="true">✓</div>
+      <h2>Até a próxima!</h2>
+      <p>Sua avaliação foi enviada. Você já pode fechar esta página.</p>
+    </section>
+
+    <!-- TELA 3: RETORNO PARA NOTA BAIXA -->
+    <section class="card tela-resultado" id="tela-melhoria" hidden>
+      <div class="icone-resultado atencao" aria-hidden="true">!</div>
+      <h2>Obrigado por nos contar</h2>
+      <p>Lamentamos que sua experiência não tenha sido a melhor. Sua avaliação foi registrada e nossa equipe vai analisar o que aconteceu.</p>
+      <a class="botao-whatsapp" id="link-whatsapp" href="#" target="_blank" rel="noopener">Falar agora com a gráfica no WhatsApp</a>
+      <button type="button" class="botao-secundario" id="botao-nova-avaliacao-2">Voltar ao início</button>
+      <button type="button" class="botao-secundario botao-sair" id="botao-sair-2">Sair</button>
+    </section>
+
+    <footer class="footer">
+      <div class="crop-mark bl" aria-hidden="true"></div>
+      <div class="crop-mark br" aria-hidden="true"></div>
+      <p>Gráfica JM Multi-Serviços</p>
+      <p class="footer-sub">Avaliação gerada via QR Code</p>
+    </footer>
+
+  </main>
+
+<script src="script.js"></script>
+</body>
+</html>
